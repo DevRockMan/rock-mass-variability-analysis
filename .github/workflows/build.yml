@@ -101,10 +101,6 @@ jobs:
           name: icons
           path: assets/
 
-      - name: Generate .icns
-        working-directory: .
-        run: node scripts/generate-icons.js
-
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
@@ -120,6 +116,11 @@ jobs:
       - name: Install Node dependencies
         working-directory: .
         run: npm install
+
+      - name: Generate .icns
+	working-directory: .
+	run: node scripts/generate-icons.js
+
 
       - name: Setup Python environment (bundled venv)
         working-directory: .
