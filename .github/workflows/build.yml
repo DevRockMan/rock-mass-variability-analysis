@@ -22,24 +22,24 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: rmva-electron/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install icon deps
-        working-directory: rmva-electron
+        working-directory: .
         run: npm install --save-dev sharp png-to-ico
 
       - name: Install librsvg
         run: sudo apt-get install -y librsvg2-bin
 
       - name: Generate icons
-        working-directory: rmva-electron
+        working-directory: .
         run: node scripts/generate-icons.js
 
       - name: Upload icons
         uses: actions/upload-artifact@v4
         with:
           name: icons
-          path: rmva-electron/assets/icon.*
+          path: assets/icon.*
 
   # ── Windows build ───────────────────────────────────────────────────────
   build-windows:
@@ -53,14 +53,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: icons
-          path: rmva-electron/assets/
+          path: assets/
 
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: rmva-electron/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Setup Python 3.12
         uses: actions/setup-python@v5
@@ -68,15 +68,15 @@ jobs:
           python-version: "3.12"
 
       - name: Install Node dependencies
-        working-directory: rmva-electron
+        working-directory: .
         run: npm ci
 
       - name: Setup Python environment (bundled venv)
-        working-directory: rmva-electron
+        working-directory: .
         run: node scripts/setup-python.js
 
       - name: Build Windows installers
-        working-directory: rmva-electron
+        working-directory: .
         run: npm run dist:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -85,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-dist
-          path: rmva-electron/dist/*.{exe,zip}
+          path: release/*.{exe,zip}
 
   # ── macOS build ─────────────────────────────────────────────────────────
   build-macos:
@@ -99,10 +99,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: icons
-          path: rmva-electron/assets/
+          path: assets/
 
       - name: Generate .icns
-        working-directory: rmva-electron
+        working-directory: .
         run: node scripts/generate-icons.js
 
       - name: Setup Node 20
@@ -110,7 +110,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: rmva-electron/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Setup Python 3.12
         uses: actions/setup-python@v5
@@ -118,15 +118,15 @@ jobs:
           python-version: "3.12"
 
       - name: Install Node dependencies
-        working-directory: rmva-electron
+        working-directory: .
         run: npm ci
 
       - name: Setup Python environment (bundled venv)
-        working-directory: rmva-electron
+        working-directory: .
         run: node scripts/setup-python.js
 
       - name: Build macOS installers
-        working-directory: rmva-electron
+        working-directory: .
         run: npm run dist:mac
         env:
           GH_TOKEN:         ${{ secrets.GITHUB_TOKEN }}
@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macos-dist
-          path: rmva-electron/dist/*.{dmg,zip}
+          path: release/*.{dmg,zip}
 
   # ── Linux build ─────────────────────────────────────────────────────────
   build-linux:
@@ -150,14 +150,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: icons
-          path: rmva-electron/assets/
+          path: assets/
 
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: rmva-electron/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Setup Python 3.12
         uses: actions/setup-python@v5
@@ -170,15 +170,15 @@ jobs:
           sudo apt-get install -y rpm fakeroot
 
       - name: Install Node dependencies
-        working-directory: rmva-electron
+        working-directory: .
         run: npm ci
 
       - name: Setup Python environment (bundled venv)
-        working-directory: rmva-electron
+        working-directory: .
         run: node scripts/setup-python.js
 
       - name: Build Linux packages
-        working-directory: rmva-electron
+        working-directory: .
         run: npm run dist:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -187,7 +187,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linux-dist
-          path: rmva-electron/dist/*.{AppImage,deb,rpm}
+          path: release/*.{AppImage,deb,rpm}
 
   # ── Release ─────────────────────────────────────────────────────────────
   release:
@@ -199,12 +199,12 @@ jobs:
       - name: Download all dist artifacts
         uses: actions/download-artifact@v4
         with:
-          path: dist-all/
+          path: release-all/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist-all/**/*
+          files: release-all/**/*
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
