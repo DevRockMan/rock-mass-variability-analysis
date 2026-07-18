@@ -4,4 +4,3 @@ pandas
 scipy
 openpyxl
 matplotlib
-matplotlib>=3.8.0
