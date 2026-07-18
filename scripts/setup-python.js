@@ -33,6 +33,7 @@ const PACKAGES = [
   "pandas>=2.0.0",
   "scipy>=1.12.0",
   "openpyxl>=3.1.0",
+  "matplotlib>=3.8.0",
   "altair>=5.0.0",
   "watchdog",
   "pyarrow",
@@ -130,7 +131,7 @@ function getPythonInVenv() {
 
   // 7. Verify
   console.log("\n🔬  Verifying installation…");
-  run(`"${venvPy}" -c "import streamlit, numpy, pandas, scipy, openpyxl; print('OK')"`);
+  run(`"${venvPy}" -c "import streamlit, numpy, pandas, scipy, openpyxl, matplotlib; print('OK')"`);
 
   // 8. Write a manifest file
   const manifest = {
