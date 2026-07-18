@@ -137,7 +137,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macos-dist
-          path: release/*.{dmg,zip}
+          path: release/*.zip
 
   # ── Linux build ─────────────────────────────────────────────────────────
   build-linux:
