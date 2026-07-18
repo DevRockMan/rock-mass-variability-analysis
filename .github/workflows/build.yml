@@ -118,8 +118,8 @@ jobs:
         run: npm install
 
       - name: Generate .icns
-	working-directory: .
-	run: node scripts/generate-icons.js
+        working-directory: .
+        run: node scripts/generate-icons.js
 
 
       - name: Setup Python environment (bundled venv)
