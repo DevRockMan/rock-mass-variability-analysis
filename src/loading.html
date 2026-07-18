@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starting…</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'JetBrains Mono', 'Fira Mono', 'Courier New', monospace;
+    background: #080c10;
+    color: #d8e4f0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-app-region: drag;
+  }
+
+  .icon {
+    font-size: 52px;
+    margin-bottom: 18px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #e8a020;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 9px;
+    color: #607080;
+    letter-spacing: 1.5px;
+    margin-bottom: 32px;
+  }
+
+  .bar-track {
+    width: 320px;
+    height: 3px;
+    background: #1a2230;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #b87810, #e8a020, #b87810);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+    border-radius: 2px;
+    width: 60%;
+  }
+
+  .status {
+    font-size: 10px;
+    color: #607080;
+    letter-spacing: 1px;
+    animation: blink 1.4s step-end infinite;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.08); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+  <div class="icon">⛰️</div>
+  <div class="title">ROCK MASS VARIABILITY ANALYSIS</div>
+  <div class="subtitle">MONTE CARLO · HOEK-BROWN · RMR · Q-SYSTEM</div>
+  <div class="bar-track"><div class="bar-fill"></div></div>
+  <div class="status" id="status">STARTING PYTHON SERVER…</div>
+
+  <script>
+    const messages = [
+      "STARTING PYTHON SERVER…",
+      "LOADING NUMPY / SCIPY…",
+      "INITIALISING STREAMLIT…",
+      "PREPARING SIMULATION ENGINE…",
+      "ALMOST READY…",
+    ];
+    let i = 0;
+    const el = document.getElementById("status");
+    setInterval(() => {
+      i = (i + 1) % messages.length;
+      el.textContent = messages[i];
+    }, 1800);
+  </script>
+</body>
+</html>

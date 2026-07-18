@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Rock Mass Variability Analysis",
+  "version": "2.0.0",
+  "identifier": "com.rmva.rock-mass-variability-analysis",
+
+  "build": {
+    "beforeBuildCommand": "node scripts/setup-python.js",
+    "beforeDevCommand":   "node scripts/setup-python.js",
+    "frontendDist":       "../app",
+    "devUrl":             "http://127.0.0.1:8501"
+  },
+
+  "app": {
+    "windows": [
+      {
+        "label":        "main",
+        "title":        "Rock Mass Variability Analysis",
+        "width":        1400,
+        "height":       900,
+        "minWidth":     1024,
+        "minHeight":    700,
+        "resizable":    true,
+        "fullscreen":   false,
+        "decorations":  true,
+        "center":       true,
+        "url":          "http://127.0.0.1:8501"
+      }
+    ],
+    "security": {
+      "csp": null,
+      "assetProtocol": { "enable": false }
+    }
+  },
+
+  "bundle": {
+    "active":      true,
+    "targets":     "all",
+    "icon": [
+      "assets/icon.png",
+      "assets/icon.ico",
+      "assets/icon.icns"
+    ],
+    "category":    "Productivity",
+    "shortDescription": "Rock mass variability analysis via Monte Carlo simulation",
+    "longDescription":  "Probabilistic rock mass engineering: Q-system, RMR, Hoek-Brown, support pressure, tunnel CCM, reliability analysis, and ANN surrogate modelling.",
+    "copyright":   "Copyright © 2024",
+    "publisher":   "Rock Mass Variability Analysis",
+    "homepage":    "https://github.com/yourorg/rmva",
+    "license":     "MIT",
+
+    "windows": {
+      "wix": {
+        "language": [{ "id": "en-US" }]
+      },
+      "nsis": {
+        "displayLanguageSelector": false,
+        "installMode":             "currentUser"
+      }
+    },
+
+    "macOS": {
+      "entitlements":          "assets/entitlements.mac.plist",
+      "exceptionDomain":       "127.0.0.1",
+      "minimumSystemVersion":  "10.15",
+      "signingIdentity":       null
+    },
+
+    "linux": {
+      "deb": { "depends": ["python3", "python3-pip"] },
+      "appimage": { "bundleMediaFramework": false },
+      "category": "Science"
+    },
+
+    "resources": ["app/**/*"]
+  },
+
+  "plugins": {
+    "shell": {
+      "open":  true,
+      "scope": [
+        {
+          "name":    "start-streamlit",
+          "cmd":     "python3",
+          "args":    true,
+          "sidecar": false
+        },
+        {
+          "name":    "python",
+          "cmd":     "python",
+          "args":    true,
+          "sidecar": false
+        }
+      ]
+    }
+  }
+}
