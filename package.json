@@ -29,8 +29,8 @@
     "tree-kill": "^1.2.2"
   },
   "devDependencies": {
-    "electron": "^43.1.1",
-    "electron-builder": "^26.15.3",
+    "electron": "30.5.1",
+    "electron-builder": "24.13.3",
     "png-to-ico": "^2.1.8",
     "sharp": "^0.33.5"
   },
